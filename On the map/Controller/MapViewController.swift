@@ -126,18 +126,11 @@ class MapViewController: UIViewController, MKMapViewDelegate{
 //        task.resume()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//                let activityIndicatorView = NVActivityIndicatorView(frame: frame, type: .orbit, color: nil, padding: nil)
-//                activityIndicatorView.stopAnimating()
-    }
-    
     func getLocation(result: [[String:AnyObject]], completionaHandler: @escaping (_ studentLocation: [StudentLocation]) -> Void) {
         for student in result {
             let studentLocation = StudentLocation()
             
             if let firstName = student["firstName"] as? String {
-//                self.studentFirstName?.append(firstName)
-                
                 print("Saved successfully")
                 studentLocation.firstName = firstName
                 print(firstName)
@@ -204,7 +197,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinTintColor = .red
-//            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             pinView!.annotation = annotation
         }
@@ -221,12 +214,37 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    //    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        guard let subtitle = view.annotation?.subtitle! else {
-//            return
-//        }
-//        let url = URL(string: subtitle)
-//        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let subtitle = view.annotation?.subtitle!, let url = URL(string: subtitle) else {
+            return
+        }
+        
+        if (UIApplication.shared.canOpenURL(url)) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            let alert = UIAlertController(title: "Invalid Link", message: nil, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+            alert.addAction(alertAction)
+            present(alert, animated: true, completion: nil)
+        }
+
+    }
+    
+    
+//        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//
+//            guard let subtitle = view.annotation?.subtitle! else {
+//                return
+//            }
+//            let url = URL(string: subtitle)
+//
+//            if (UIApplication.shared.canOpenURL(URL(string: "")!)) {
+//
+//            } else {
+//
+//            }
+//            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
 //    }
 
 }

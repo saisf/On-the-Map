@@ -72,7 +72,17 @@ class MapTableViewController: UITableViewController {
         }
         return UIApplication.shared.canOpenURL(url)
     }
+    
+    @IBAction func refreshButton(_ sender: UIBarButtonItem) {
+        Student.Constant.mapPin(mapView: nil)
+        tableView.reloadData()
+        print("Refresh successfully")
+    }
+    
 
+    @IBAction func logoutButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

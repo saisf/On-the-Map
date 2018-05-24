@@ -20,10 +20,13 @@ extension Student {
     
     struct Constant {
         
-    static func mapPin(mapView: MKMapView) {
+    static func mapPin(mapView: MKMapView?) {
+        
+        // MARK: Activity Indicator
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 80, height: 80)
         NVActivityIndicatorView.DEFAULT_TYPE = .orbit
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
+        
         var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -124,9 +127,10 @@ extension Student {
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = coordinate
                     annotation.title = "\(first) \(last)"
+                    
                     annotation.subtitle = medURL
                     
-                    mapView.addAnnotation(annotation)
+                    mapView?.addAnnotation(annotation)
                 }
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             }

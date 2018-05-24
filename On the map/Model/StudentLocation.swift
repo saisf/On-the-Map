@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import MapKit
 
 class StudentLocation {
+    
     var createdAt: String?
     var firstName: String? = "[No First Name]"
     var lastName: String? = "[No Last Name]"

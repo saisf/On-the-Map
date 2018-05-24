@@ -32,15 +32,6 @@ class ViewController: UIViewController {
             return
         }
         
-//        Student.sharedInstance().taskForPOSTMethod(user: user, password: password) { (result, error) in
-//            guard (error == nil) else {
-//                return
-//            }
-//
-//            print(result)
-//        }
-        
-//         POSTing a Session to Udacity API to obtain session id
         var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -101,20 +92,7 @@ class ViewController: UIViewController {
         }
 
         task.resume()
-//        let request = URLRequest(url: URL(string: "https://www.udacity.com/api/users/11392149253")!)
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { data, response, error in
-//            if error != nil { // Handle error...
-//                return
-//            }
-//            let range = Range(5..<data!.count)
-//            let newData = data?.subdata(in: range) /* subset response data! */
-//            print(String(data: newData!, encoding: .utf8)!)
-//        }
-//        task.resume()
-//
-//    }
-    
+
     }
     
     func deleteSession() {
@@ -140,26 +118,4 @@ class ViewController: UIViewController {
         task.resume()
     }
 }
-
-//extension UIViewController {
-//    class func displaySpinner(onView: UIView) -> UIView {
-//        let spinnerView = UIView.init(frame: onView.bounds)
-//        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-//        let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
-//        ai.startAnimating()
-//        ai.center = spinnerView.center
-//        
-//        DispatchQueue.main.async {
-//            spinnerView.addSubview(ai)
-//            onView.addSubview(spinnerView)
-//        }
-//        return spinnerView
-//    }
-//    
-//    class func removeSpinner(spinner: UIView) {
-//        DispatchQueue.main.async {
-//            spinner.removeFromSuperview()
-//        }
-//    }
-//}
 

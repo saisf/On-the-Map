@@ -240,7 +240,7 @@
             </objects>
             <point key="canvasLocation" x="1081.5999999999999" y="284.48275862068965"/>
         </scene>
-        <!--Map Table View Controller-->
+        <!--On the Map-->
         <scene sceneID="0SZ-uQ-6OP">
             <objects>
                 <tableViewController id="r3Z-VO-LYu" customClass="MapTableViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
@@ -283,7 +283,21 @@
                             <outlet property="delegate" destination="r3Z-VO-LYu" id="JDy-jq-FuR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="0DF-QU-PUQ"/>
+                    <navigationItem key="navigationItem" title="On the Map" id="0DF-QU-PUQ">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="HwR-mr-NgD">
+                            <connections>
+                                <action selector="logoutButton:" destination="r3Z-VO-LYu" id="GWS-p9-Ln5"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="R5D-Oz-Qjo"/>
+                            <barButtonItem systemItem="refresh" id="BEJ-dt-hRr">
+                                <connections>
+                                    <action selector="refreshButton:" destination="r3Z-VO-LYu" id="VaR-a8-R5D"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hgp-A3-j0R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
