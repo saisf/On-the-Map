@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import NVActivityIndicatorView
 
 extension Student {
     struct Constants {
@@ -20,13 +21,17 @@ extension Student {
     struct Constant {
         
     static func mapPin(mapView: MKMapView) {
-        
+        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 80, height: 80)
+        NVActivityIndicatorView.DEFAULT_TYPE = .orbit
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
         var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             // Handle error...
+//            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            
             if error != nil {
                 return
             }
@@ -123,6 +128,7 @@ extension Student {
                     
                     mapView.addAnnotation(annotation)
                 }
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             }
         }
         task.resume()

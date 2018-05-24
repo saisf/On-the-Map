@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1027E6D686B6F7B741EF8AD0 /* Pods_On_the_map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432F130A904C84A31C703202 /* Pods_On_the_map.framework */; };
 		EC341F4D20AF7107009A631E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F4C20AF7107009A631E /* AppDelegate.swift */; };
 		EC341F4F20AF7107009A631E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F4E20AF7107009A631E /* ViewController.swift */; };
 		EC341F5220AF7107009A631E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC341F5020AF7107009A631E /* Main.storyboard */; };
@@ -20,6 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		432F130A904C84A31C703202 /* Pods_On_the_map.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_On_the_map.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68AF347F074072840E877898 /* Pods-On the map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-On the map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-On the map/Pods-On the map.debug.xcconfig"; sourceTree = "<group>"; };
+		957C9B4F639BA9BEE0A507B4 /* Pods-On the map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-On the map.release.xcconfig"; path = "Pods/Target Support Files/Pods-On the map/Pods-On the map.release.xcconfig"; sourceTree = "<group>"; };
 		EC341F4920AF7107009A631E /* On the map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC341F4C20AF7107009A631E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC341F4E20AF7107009A631E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,17 +43,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1027E6D686B6F7B741EF8AD0 /* Pods_On_the_map.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		972D27D352CB1652B56DFA75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				432F130A904C84A31C703202 /* Pods_On_the_map.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EC341F4020AF7107009A631E = {
 			isa = PBXGroup;
 			children = (
 				EC341F4B20AF7107009A631E /* On the map */,
 				EC341F4A20AF7107009A631E /* Products */,
+				EF2A501CF563ABC54848DD35 /* Pods */,
+				972D27D352CB1652B56DFA75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +118,15 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		EF2A501CF563ABC54848DD35 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				68AF347F074072840E877898 /* Pods-On the map.debug.xcconfig */,
+				957C9B4F639BA9BEE0A507B4 /* Pods-On the map.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -110,9 +134,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC341F5B20AF7107009A631E /* Build configuration list for PBXNativeTarget "On the map" */;
 			buildPhases = (
+				28E63C5B21A9D3B03C7136AE /* [CP] Check Pods Manifest.lock */,
 				EC341F4520AF7107009A631E /* Sources */,
 				EC341F4620AF7107009A631E /* Frameworks */,
 				EC341F4720AF7107009A631E /* Resources */,
+				C2A15939EE0FE4B653BF5F26 /* [CP] Embed Pods Frameworks */,
+				5597CB21F44EB36C9CECF771 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -169,6 +196,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		28E63C5B21A9D3B03C7136AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-On the map-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5597CB21F44EB36C9CECF771 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-On the map/Pods-On the map-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2A15939EE0FE4B653BF5F26 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-On the map/Pods-On the map-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-On the map/Pods-On the map-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EC341F4520AF7107009A631E /* Sources */ = {
@@ -316,6 +397,7 @@
 		};
 		EC341F5C20AF7107009A631E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68AF347F074072840E877898 /* Pods-On the map.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -331,6 +413,7 @@
 		};
 		EC341F5D20AF7107009A631E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 957C9B4F639BA9BEE0A507B4 /* Pods-On the map.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

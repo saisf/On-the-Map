@@ -8,18 +8,16 @@
 
 import UIKit
 import MapKit
+import NVActivityIndicatorView
 
 class MapViewController: UIViewController, MKMapViewDelegate{
     @IBOutlet weak var mapView: MKMapView!
-    var student = Student.sharedInstance()
-    
-    
+    static let activityData = ActivityData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
 
-        
+        mapView.delegate = self
         Student.Constant.mapPin(mapView: mapView)
 //        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
 //        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -128,6 +126,11 @@ class MapViewController: UIViewController, MKMapViewDelegate{
 //        task.resume()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+//                let activityIndicatorView = NVActivityIndicatorView(frame: frame, type: .orbit, color: nil, padding: nil)
+//                activityIndicatorView.stopAnimating()
+    }
+    
     func getLocation(result: [[String:AnyObject]], completionaHandler: @escaping (_ studentLocation: [StudentLocation]) -> Void) {
         for student in result {
             let studentLocation = StudentLocation()
@@ -210,6 +213,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
         Student.Constant.mapPin(mapView: mapView)
+
         print("Refresh successfully")
         mapView.reloadInputViews()
     }
