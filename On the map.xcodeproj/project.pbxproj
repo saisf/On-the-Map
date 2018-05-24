@@ -12,6 +12,11 @@
 		EC341F5220AF7107009A631E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC341F5020AF7107009A631E /* Main.storyboard */; };
 		EC341F5420AF7107009A631E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC341F5320AF7107009A631E /* Assets.xcassets */; };
 		EC341F5720AF7107009A631E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC341F5520AF7107009A631E /* LaunchScreen.storyboard */; };
+		EC341F6220B0EED1009A631E /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F6120B0EED1009A631E /* Student.swift */; };
+		EC341F6420B0F342009A631E /* StudentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F6320B0F342009A631E /* StudentConstants.swift */; };
+		EC341F6620B32DCC009A631E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F6520B32DCC009A631E /* MapViewController.swift */; };
+		EC341F6820B47946009A631E /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F6720B47946009A631E /* StudentLocation.swift */; };
+		EC4ACA5A20B4A31B00973B91 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4ACA5920B4A31B00973B91 /* MapTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		EC341F5320AF7107009A631E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC341F5620AF7107009A631E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC341F5820AF7107009A631E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC341F6120B0EED1009A631E /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		EC341F6320B0F342009A631E /* StudentConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentConstants.swift; sourceTree = "<group>"; };
+		EC341F6520B32DCC009A631E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		EC341F6720B47946009A631E /* StudentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		EC4ACA5920B4A31B00973B91 /* MapTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +65,42 @@
 			isa = PBXGroup;
 			children = (
 				EC341F4C20AF7107009A631E /* AppDelegate.swift */,
-				EC341F4E20AF7107009A631E /* ViewController.swift */,
+				EC341F5E20AF8AE0009A631E /* Model */,
+				EC341F5F20AF8AF0009A631E /* View */,
+				EC341F6020AF8AFE009A631E /* Controller */,
 				EC341F5020AF7107009A631E /* Main.storyboard */,
 				EC341F5320AF7107009A631E /* Assets.xcassets */,
 				EC341F5520AF7107009A631E /* LaunchScreen.storyboard */,
 				EC341F5820AF7107009A631E /* Info.plist */,
 			);
 			path = "On the map";
+			sourceTree = "<group>";
+		};
+		EC341F5E20AF8AE0009A631E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EC341F6120B0EED1009A631E /* Student.swift */,
+				EC341F6320B0F342009A631E /* StudentConstants.swift */,
+				EC341F6720B47946009A631E /* StudentLocation.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC341F5F20AF8AF0009A631E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EC341F6020AF8AFE009A631E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EC341F4E20AF7107009A631E /* ViewController.swift */,
+				EC341F6520B32DCC009A631E /* MapViewController.swift */,
+				EC4ACA5920B4A31B00973B91 /* MapTableViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +176,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC341F4F20AF7107009A631E /* ViewController.swift in Sources */,
+				EC341F6420B0F342009A631E /* StudentConstants.swift in Sources */,
+				EC4ACA5A20B4A31B00973B91 /* MapTableViewController.swift in Sources */,
+				EC341F6220B0EED1009A631E /* Student.swift in Sources */,
+				EC341F6620B32DCC009A631E /* MapViewController.swift in Sources */,
 				EC341F4D20AF7107009A631E /* AppDelegate.swift in Sources */,
+				EC341F6820B47946009A631E /* StudentLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
