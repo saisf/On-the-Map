@@ -114,7 +114,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="0De-7N-JcV"/>
+                            <barButtonItem systemItem="add" id="0De-7N-JcV">
+                                <connections>
+                                    <action selector="addLocationButton:" destination="Ohn-h2-svj" id="leZ-Cr-Nez"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="refresh" id="WPV-4O-FS9">
                                 <connections>
                                     <action selector="refreshButton:" destination="Ohn-h2-svj" id="eIR-TE-uIl"/>

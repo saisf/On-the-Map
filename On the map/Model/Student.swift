@@ -14,7 +14,8 @@ class Student: NSObject {
     var session = URLSession.shared
     
     var sessionID: String? = nil
-    var userID: Int? = nil
+    
+    static var uniqueKey = ""
     
     override init() {
         super.init()

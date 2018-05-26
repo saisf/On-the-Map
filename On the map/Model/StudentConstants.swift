@@ -34,19 +34,23 @@ extension Student {
         let task = session.dataTask(with: request) { data, response, error in
             // Handle error...
 //            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            
+
             if error != nil {
                 return
             }
             DispatchQueue.main.async {
                 print(String(data: data!, encoding: .utf8)!)
-                let parseResult = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-                
-                
+
+
+                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+
+
                 print(parseResult)
-                guard let result = parseResult["results"] as? [[String:AnyObject]] else {
+                
+                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
                     return
                 }
+        
                 
                 var num = 0
                 for student in result {

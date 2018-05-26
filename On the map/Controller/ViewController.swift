@@ -53,9 +53,6 @@ class ViewController: UIViewController {
                 } catch {
                     print("Error: \(error)")
                 }
-//                parseResult = try! JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as AnyObject
-                
-//                let sessionID = parseResult?["session"] as? [String: String]
                 
                 guard let sessionID = parseResult?["session"] as? [String: String] else {
                     let alert = UIAlertController(title: "Invalid Email or Password", message: nil, preferredStyle: .alert)
@@ -68,15 +65,20 @@ class ViewController: UIViewController {
                 guard let session = sessionID["id"] else {
                     return
                 }
-//                guard let session = sessionID!["id"] else {
-//                    return
-//                }
+
                 print("\(session)")
                 
-                guard let account = parseResult?["account"] as? [String: AnyObject], let registered = account["registered"] as? Bool else {
+//                guard let account = parseResult?["account"] as? [String: AnyObject], let registered = account["registered"] as? Bool else {
+//                    return
+//                }
+                guard let account = parseResult?["account"] as? [String: AnyObject], let registered = account["registered"] as? Bool, let uniqueKey = account["key"] as? String else {
                     return
                 }
+
                 print(registered)
+                print(uniqueKey)
+                Student.uniqueKey = uniqueKey
+                print(Student.uniqueKey)
                 
                 if registered {
                     print("User is registered")
