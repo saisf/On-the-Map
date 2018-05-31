@@ -110,6 +110,7 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
 //            performSegue(withIdentifier: "ConfirmLocationViewController", sender: nil)
             getCoordinate(completion: { (coordinate) in
                 Student.newLocation = coordinate
+                Student.mediaURL = mediaURL
                 self.performSegue(withIdentifier: "ConfirmLocationViewController", sender: nil)
             })
         } else {

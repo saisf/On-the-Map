@@ -26,16 +26,13 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
 ////        annotation.subtitle = medURL
 //
 //        mapView?.addAnnotation(annotation)
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
+        
         guard let coordinate = Student.newLocation else {
             return
         }
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-                annotation.title = "Hi"
+//        annotation.title = "Hi"
         //
         //        annotation.subtitle = medURL
         print("Location successful")
@@ -45,6 +42,35 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         
         let region = MKCoordinateRegion(center: annotation.coordinate, span: span)
         mapView.setRegion(region, animated: true)
+        
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+            if error != nil {
+                print("Reverse geocoder failed with error" + (error?.localizedDescription)!)
+                return
+            }
+            
+            guard let placemarks = placemarks else {
+                return
+            }
+            
+            if placemarks.count > 0 {
+
+                let pm = placemarks[0]
+                guard let city = pm.locality, let state = pm.administrativeArea, let country = pm.country else {
+                    return
+                }
+                annotation.title = "\(city), \(state), \(country)"
+                
+            } else {
+                print("Problem with the data received from geocoder")
+            }
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
