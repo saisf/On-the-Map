@@ -170,6 +170,9 @@
                                                 <state key="normal" title="FIND LOCATION">
                                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="findLocation:" destination="7eo-cT-eXC" eventType="touchUpInside" id="dVA-IN-RB0"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -183,6 +186,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RPG-gK-tCv"/>
                     </view>
+                    <connections>
+                        <outlet property="locationTextField" destination="3kY-DW-dle" id="jaI-9w-Ccl"/>
+                        <outlet property="mediaURL" destination="6xv-b9-MeO" id="JJ7-nj-Aig"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kLD-le-Xi0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

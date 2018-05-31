@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class Student: NSObject {
     
@@ -18,6 +19,7 @@ class Student: NSObject {
     static var uniqueKey = ""
     static var firstName = ""
     static var lastName = ""
+    static var newLocation: CLLocationCoordinate2D?
     
     override init() {
         super.init()
