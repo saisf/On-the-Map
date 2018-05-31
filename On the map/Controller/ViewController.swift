@@ -42,6 +42,7 @@ class ViewController: UIViewController {
             if error != nil { // Handle error…
                 return
             }
+            
             DispatchQueue.main.async {
                 let range = Range(5..<data!.count)
                 let newData = data?.subdata(in: range) /* subset response data! */

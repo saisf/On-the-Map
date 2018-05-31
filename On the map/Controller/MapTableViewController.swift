@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class MapTableViewController: UITableViewController {
 
@@ -86,6 +87,68 @@ class MapTableViewController: UITableViewController {
 
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
+        
+        var exist: Bool = false
+        
+        // REQUEST
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=500&&order=-updatedAt")!)
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            // Handle error...
+            if error != nil {
+                return
+            }
+            
+            NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
+            DispatchQueue.main.async {
+                print(String(data: data!, encoding: .utf8)!)
+                
+                
+                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+        
+                print(parseResult)
+                
+                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
+                    return
+                }
+                var num = 0
+                for student in result {
+                    num += 1
+                    print(num)
+                    if student["uniqueKey"] as? String == Student.uniqueKey {
+                        exist = true
+                        print(student["uniqueKey"] as? String)
+                        print("I got it")
+                        guard let studentFirstName = student["firstName"] as? String else {
+                            return
+                        }
+                        guard let studentLastName = student["lastName"] as? String else {
+                            return
+                        }
+                        Student.firstName = studentFirstName
+                        Student.lastName = studentLastName
+                    }
+                }
+                
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                if exist {
+                    let alert = UIAlertController(title: nil, message: "User \"\(Student.firstName) \(Student.lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
+                    let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
+                        self.performSegue(withIdentifier: "ToAddLocationFromTable", sender: nil)
+                    })
+                    let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                    alert.addAction(overwriteAlertAction)
+                    alert.addAction(cancelAlertAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+        task.resume()
     }
     
     

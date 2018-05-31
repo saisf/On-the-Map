@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1027E6D686B6F7B741EF8AD0 /* Pods_On_the_map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432F130A904C84A31C703202 /* Pods_On_the_map.framework */; };
+		EC251BD320BFBAF00018AAE9 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC251BD220BFBAF00018AAE9 /* NewLocationViewController.swift */; };
 		EC341F4D20AF7107009A631E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F4C20AF7107009A631E /* AppDelegate.swift */; };
 		EC341F4F20AF7107009A631E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F4E20AF7107009A631E /* ViewController.swift */; };
 		EC341F5220AF7107009A631E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC341F5020AF7107009A631E /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 		432F130A904C84A31C703202 /* Pods_On_the_map.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_On_the_map.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68AF347F074072840E877898 /* Pods-On the map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-On the map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-On the map/Pods-On the map.debug.xcconfig"; sourceTree = "<group>"; };
 		957C9B4F639BA9BEE0A507B4 /* Pods-On the map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-On the map.release.xcconfig"; path = "Pods/Target Support Files/Pods-On the map/Pods-On the map.release.xcconfig"; sourceTree = "<group>"; };
+		EC251BD220BFBAF00018AAE9 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		EC341F4920AF7107009A631E /* On the map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC341F4C20AF7107009A631E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC341F4E20AF7107009A631E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				EC341F4E20AF7107009A631E /* ViewController.swift */,
 				EC341F6520B32DCC009A631E /* MapViewController.swift */,
 				EC4ACA5920B4A31B00973B91 /* MapTableViewController.swift */,
+				EC251BD220BFBAF00018AAE9 /* NewLocationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				EC341F6420B0F342009A631E /* StudentConstants.swift in Sources */,
 				EC4ACA5A20B4A31B00973B91 /* MapTableViewController.swift in Sources */,
 				EC341F6220B0EED1009A631E /* Student.swift in Sources */,
+				EC251BD320BFBAF00018AAE9 /* NewLocationViewController.swift in Sources */,
 				EC341F6620B32DCC009A631E /* MapViewController.swift in Sources */,
 				EC341F4D20AF7107009A631E /* AppDelegate.swift in Sources */,
 				EC341F6820B47946009A631E /* StudentLocation.swift in Sources */,

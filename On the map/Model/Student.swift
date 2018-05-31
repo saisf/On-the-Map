@@ -16,6 +16,8 @@ class Student: NSObject {
     var sessionID: String? = nil
     
     static var uniqueKey = ""
+    static var firstName = ""
+    static var lastName = ""
     
     override init() {
         super.init()

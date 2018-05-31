@@ -13,180 +13,13 @@ import NVActivityIndicatorView
 class MapViewController: UIViewController, MKMapViewDelegate{
     @IBOutlet weak var mapView: MKMapView!
     static let activityData = ActivityData()
+    var exist: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         mapView.delegate = self
         Student.Constant.mapPin(mapView: mapView)
-//        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
-//        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-//        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { data, response, error in
-//            // Handle error...
-//            if error != nil {
-//                return
-//            }
-//            DispatchQueue.main.async {
-//                print(String(data: data!, encoding: .utf8)!)
-//                let parseResult = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-//
-//
-//                print(parseResult)
-//                guard let result = parseResult["results"] as? [[String:AnyObject]] else {
-//                    return
-//                }
-//
-//                var num = 0
-//                for student in result {
-//                    let studentLocation = StudentLocation()
-//                    var first = ""
-//                    var last = ""
-//                    var lat = 0.0
-//                    var long = 0.0
-//                    var medURL = ""
-//
-//                    num += 1
-//                    print(num)
-//
-//                    if let firstName = student["firstName"] as? String {
-//
-//                        print("Saved successfully")
-//                        studentLocation.firstName = firstName
-//                        print(firstName)
-//                        first = firstName
-//                    }
-//
-//                    if let lastName = student["lastName"] as? String {
-//                        studentLocation.lastName = lastName
-//                        print(lastName)
-//                        last = lastName
-//                    }
-//
-//                    if let latitude = student["latitude"] as? Double {
-//                        studentLocation.latitude = latitude
-//                        print(latitude)
-//                        lat = latitude
-//                    }
-//
-//                    if let longitude = student["longitude"] as? Double {
-//                        studentLocation.longitude = longitude
-//                        print(longitude)
-//                        long = longitude
-//                    }
-//
-//                    if let mapString = student["mapString"] as? String {
-//                        studentLocation.mapString = mapString
-//                        print(mapString)
-//                    }
-//
-//                    if let mediaURL = student["mediaURL"] as? String {
-//                        studentLocation.mediaURL = mediaURL
-//                        print(mediaURL)
-//                        medURL = mediaURL
-//                    }
-//
-//                    if let objectId = student["objectId"] as? String {
-//                        studentLocation.objectId = objectId
-//                        print(objectId)
-//                    }
-//
-//                    if let uniqueKey = student["uniqueKey"] as? String {
-//                        studentLocation.uniqueKey = uniqueKey
-//                        print(uniqueKey)
-//                    }
-//
-//                    if let createdAt = student["createdAt"] as? String {
-//                        studentLocation.createdAt = createdAt
-//                        print(createdAt)
-//                    }
-//
-//                    if let updatedAt = student["updatedAt"] as? String {
-//                        studentLocation.updatedAt = updatedAt
-//                        print(updatedAt)
-//                    }
-//
-//                    StudentLocation.studentLocations.append(studentLocation)
-//
-//                    print("student location saved successfully")
-//                    let latt = CLLocationDegrees(lat)
-//                    let longg = CLLocationDegrees(long)
-//                    let coordinate = CLLocationCoordinate2D(latitude: latt, longitude: longg)
-//
-//                    let annotation = MKPointAnnotation()
-//                    annotation.coordinate = coordinate
-//                    annotation.title = "\(first) \(last)"
-//                    annotation.subtitle = medURL
-//
-//                    self.mapView.addAnnotation(annotation)
-//                    }
-//            }
-//        }
-//        task.resume()
     }
-    
-    func getLocation(result: [[String:AnyObject]], completionaHandler: @escaping (_ studentLocation: [StudentLocation]) -> Void) {
-        for student in result {
-            let studentLocation = StudentLocation()
-            
-            if let firstName = student["firstName"] as? String {
-                print("Saved successfully")
-                studentLocation.firstName = firstName
-                print(firstName)
-                
-            }
-            if let lastName = student["lastName"] as? String {
-                studentLocation.lastName = lastName
-                print(lastName)
-            }
-            
-            if let latitude = student["latitude"] as? Double {
-                studentLocation.latitude = latitude
-                print(latitude)
-            }
-            
-            if let longitude = student["longitude"] as? Double {
-                studentLocation.longitude = longitude
-                print(longitude)
-            }
-            
-            if let mapString = student["mapString"] as? String {
-                studentLocation.mapString = mapString
-                print(mapString)
-            }
-            
-            if let mediaURL = student["mediaURL"] as? String {
-                studentLocation.mediaURL = mediaURL
-                print(mediaURL)
-            }
-            
-            if let objectId = student["objectId"] as? String {
-                studentLocation.objectId = objectId
-                print(objectId)
-            }
-            
-            if let uniqueKey = student["uniqueKey"] as? String {
-                studentLocation.uniqueKey = uniqueKey
-                print(uniqueKey)
-            }
-            
-            if let createdAt = student["createdAt"] as? String {
-                studentLocation.createdAt = createdAt
-                print(createdAt)
-            }
-            
-            if let updatedAt = student["updatedAt"] as? String {
-                studentLocation.updatedAt = updatedAt
-                print(updatedAt)
-            }
-            
-            StudentLocation.studentLocations.append(studentLocation)
-        }
-        
-        completionaHandler(StudentLocation.studentLocations)
-    }
-
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
@@ -204,9 +37,9 @@ class MapViewController: UIViewController, MKMapViewDelegate{
 
         return pinView
     }
+    
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
         Student.Constant.mapPin(mapView: mapView)
-
         print("Refresh successfully")
         mapView.reloadInputViews()
     }
@@ -216,55 +49,72 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
-//        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
-//        request.httpMethod = "POST"
-//        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-//        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".data(using: .utf8)
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { data, response, error in
-//            if error != nil { // Handle error…
-//                return
-//            }
-//            print(String(data: data!, encoding: .utf8)!)
-//            print("New location added successfully!")
-//        }
-//        task.resume()
-        var exist: Bool = false
-        var firstName = ""
-        var lastName = ""
-        for student in StudentLocation.studentLocations {
-            
-            if student.uniqueKey == student.uniqueKey {
-                exist = true
-                print(student.uniqueKey)
-                print("I got it")
-                guard let studentFirstName = student.firstName else {
+        
+        
+
+        // REQUEST
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=500&&order=-updatedAt")!)
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            // Handle error...
+            if error != nil {
+                return
+            }
+
+            NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
+            DispatchQueue.main.async {
+                print(String(data: data!, encoding: .utf8)!)
+
+
+                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+
+
+                print(parseResult)
+
+                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
                     return
                 }
-                guard let studentLastName = student.lastName else {
-                    return
+                var num = 0
+                for student in result {
+                    num += 1
+                    print(num)
+                    if student["uniqueKey"] as? String == Student.uniqueKey {
+                        self.exist = true
+                        print(student["uniqueKey"] as? String)
+                        print("I got it")
+                        guard let studentFirstName = student["firstName"] as? String else {
+                            return
+                        }
+                        guard let studentLastName = student["lastName"] as? String else {
+                            return
+                        }
+                        Student.firstName = studentFirstName
+                        Student.lastName = studentLastName
+                    }
                 }
 
-                firstName = studentFirstName
-                lastName = studentLastName
-            } else {
-                print("\(student.uniqueKey)")
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                    if self.exist {
+                        let alert = UIAlertController(title: nil, message: "User \"\(Student.firstName) \(Student.lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
+                        let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
+                                self.performSegue(withIdentifier: "addLocation", sender: nil)
+                            })
+                        let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                        alert.addAction(overwriteAlertAction)
+                        alert.addAction(cancelAlertAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
             }
         }
-        
-        if exist {
-            let alert = UIAlertController(title: nil, message: "User \"\(firstName) \(lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
-            let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: nil)
-            let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(overwriteAlertAction)
-            alert.addAction(cancelAlertAction)
-            present(alert, animated: true, completion: nil)
-        }
-        
+        task.resume()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as? NewLocationViewController
+        vc?.exist = exist
+    }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let subtitle = view.annotation?.subtitle!, let url = URL(string: subtitle) else {
