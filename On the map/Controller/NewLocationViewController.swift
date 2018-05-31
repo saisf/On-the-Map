@@ -30,10 +30,6 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
 //        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,25 +86,32 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func findLocation(_ sender: UIButton) {
-        guard let userLocation = locationTextField.text else {
-            return
-        }
+//        var studentCoordinate: CLLocationCoordinate2D?
+//
+//        guard let userLocation = locationTextField.text else {
+//            return
+//        }
         guard let mediaURL = mediaURL.text else {
             return
         }
         
-        getCoordinateFrom(address: userLocation) { (coordinate, error) in
-            guard let coordinate = coordinate, error == nil else {
-                return
-            }
-            Student.newLocation = coordinate
-            DispatchQueue.main.async {
-                print(coordinate)
-            }
-        }
+//        getCoordinateFrom(address: userLocation) { (coordinate, error) in
+//            guard let coordinate = coordinate, error == nil else {
+//                return
+//            }
+//            studentCoordinate = coordinate
+//            Student.newLocation = coordinate
+//            DispatchQueue.main.async {
+//                print(coordinate)
+//            }
+//        }
         
         if verifyUrl(urlString: mediaURL){
-            
+//            performSegue(withIdentifier: "ConfirmLocationViewController", sender: nil)
+            getCoordinate(completion: { (coordinate) in
+                Student.newLocation = coordinate
+                self.performSegue(withIdentifier: "ConfirmLocationViewController", sender: nil)
+            })
         } else {
             let alert = UIAlertController(title: "Invalid Link", message: nil, preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
@@ -116,6 +119,23 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
             present(alert, animated: true, completion: nil)
         }
         
+    }
+    
+    func getCoordinate(completion: @escaping(_ studentCoordinate: CLLocationCoordinate2D)-> Void) {
+        guard let userLocation = locationTextField.text else {
+            return
+        }
+        getCoordinateFrom(address: userLocation) { (coordinate, error) in
+            guard let coordinate = coordinate, error == nil else {
+                return
+            }
+            let studentCoordinate = coordinate
+//            Student.newLocation = coordinate
+            DispatchQueue.main.async {
+                print(coordinate)
+            }
+            completion(studentCoordinate)
+        }
     }
     
     func verifyUrl(urlString: String?) -> Bool {

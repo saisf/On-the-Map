@@ -135,7 +135,7 @@
             </objects>
             <point key="canvasLocation" x="1789.5999999999999" y="-379.06403940886702"/>
         </scene>
-        <!--New Location View Controller-->
+        <!--Add Location-->
         <scene sceneID="xOC-jc-UFI">
             <objects>
                 <viewController id="7eo-cT-eXC" customClass="NewLocationViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
@@ -186,14 +186,62 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RPG-gK-tCv"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Add Location" id="4uh-2y-Jo8"/>
                     <connections>
                         <outlet property="locationTextField" destination="3kY-DW-dle" id="jaI-9w-Ccl"/>
                         <outlet property="mediaURL" destination="6xv-b9-MeO" id="JJ7-nj-Aig"/>
+                        <segue destination="sKU-m9-3re" kind="show" identifier="ConfirmLocationViewController" id="eQl-Dp-uQu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kLD-le-Xi0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2702" y="-379"/>
+        </scene>
+        <!--Add Location-->
+        <scene sceneID="HZd-os-ajt">
+            <objects>
+                <viewController id="sKU-m9-3re" customClass="ConfirmLocationViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SKJ-oG-5wi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xtp-en-S5s">
+                                <rect key="frame" x="0.0" y="88" width="375" height="651"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="we9-QO-lTK">
+                                <rect key="frame" x="10" y="749" width="355" height="35"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="bXN-bS-xi6"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="FINISH">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Xtp-en-S5s" firstAttribute="leading" secondItem="oi5-bb-QXR" secondAttribute="leading" id="3pZ-Cn-3fS"/>
+                            <constraint firstItem="Xtp-en-S5s" firstAttribute="top" secondItem="oi5-bb-QXR" secondAttribute="top" id="KuU-5z-gkh"/>
+                            <constraint firstAttribute="bottom" secondItem="Xtp-en-S5s" secondAttribute="bottom" id="UpD-w0-qsr"/>
+                            <constraint firstAttribute="bottom" secondItem="we9-QO-lTK" secondAttribute="bottom" constant="40" id="VbN-mf-jkg"/>
+                            <constraint firstItem="we9-QO-lTK" firstAttribute="leading" secondItem="SKJ-oG-5wi" secondAttribute="leading" constant="10" id="W0U-ZZ-0cY"/>
+                            <constraint firstItem="we9-QO-lTK" firstAttribute="centerX" secondItem="SKJ-oG-5wi" secondAttribute="centerX" id="gH5-T8-Jnc"/>
+                            <constraint firstItem="we9-QO-lTK" firstAttribute="top" secondItem="oi5-bb-QXR" secondAttribute="bottom" constant="20" id="jzK-qa-PSV"/>
+                            <constraint firstAttribute="trailing" secondItem="we9-QO-lTK" secondAttribute="trailing" constant="10" id="q0p-cm-Ehj"/>
+                            <constraint firstItem="Xtp-en-S5s" firstAttribute="trailing" secondItem="oi5-bb-QXR" secondAttribute="trailing" id="rKu-fj-XAW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oi5-bb-QXR"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Location" id="nrf-cM-WJc"/>
+                    <connections>
+                        <outlet property="mapView" destination="Xtp-en-S5s" id="cVF-Ia-yJh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8jc-8q-fS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3570.4000000000001" y="-377.58620689655174"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dkT-sY-Ja8">
@@ -295,6 +343,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="On the Map" id="0DF-QU-PUQ">
+                        <barButtonItem key="backBarButtonItem" title="CANCEL" id="2Og-iv-H4P"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="HwR-mr-NgD">
                             <connections>
                                 <action selector="logoutButton:" destination="r3Z-VO-LYu" id="GWS-p9-Ln5"/>
