@@ -21,6 +21,7 @@ class Student: NSObject {
     static var lastName = ""
     static var newLocation: CLLocationCoordinate2D?
     static var mediaURL = ""
+    static var exist = false
     
     override init() {
         super.init()

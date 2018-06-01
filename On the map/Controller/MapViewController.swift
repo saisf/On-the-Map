@@ -111,11 +111,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         task.resume()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as? NewLocationViewController
-        vc?.exist = exist
-    }
-    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let subtitle = view.annotation?.subtitle!, let url = URL(string: subtitle) else {
             return

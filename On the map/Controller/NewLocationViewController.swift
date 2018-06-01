@@ -11,7 +11,7 @@ import CoreLocation
 
 class NewLocationViewController: UIViewController, UITextFieldDelegate {
 
-    var exist = false
+//    var exist = false
     
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var mediaURL: UITextField!
@@ -19,7 +19,7 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         locationTextField.delegate = self
         mediaURL.delegate = self
-        print(exist)
+//        print(exist)
 //        getCoordinateFrom(address: "Kalamazoo, Michigan") { (coordinate, error) in
 //            guard let coordiante = coordinate, error == nil else {
 //                return
@@ -144,6 +144,10 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
             return false
         }
         return UIApplication.shared.canOpenURL(url)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
     }
     /*
     // MARK: - Navigation
