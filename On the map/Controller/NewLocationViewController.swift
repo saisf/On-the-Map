@@ -81,7 +81,8 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
     }
 
     func updateExistingLocation() {
-        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/8ZExGR5uX8"
+        let objectId = "oAjNASo7n7"
+        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/\(objectId)"
         let url = URL(string: urlString)
         var request = URLRequest(url: url!)
         request.httpMethod = "PUT"

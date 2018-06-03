@@ -14,7 +14,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -91,7 +91,7 @@
         <!--On the Map-->
         <scene sceneID="XFo-tY-eYa">
             <objects>
-                <viewController id="Ohn-h2-svj" customClass="MapViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ohn-h2-svj" customClass="MapViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VOb-7o-d8I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -270,7 +270,7 @@
         <!--Navigation Controller-->
         <scene sceneID="adq-Qu-I8E">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="no0-pd-Ags" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="no0-pd-Ags" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="mapview-selected" landscapeImage="mapview-selected" id="x3X-1Z-DyW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Nop-Ch-jT9">
@@ -385,6 +385,6 @@
         <image name="world" width="52" height="67"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ecw-o3-v74"/>
+        <segue reference="afy-Nd-u5w"/>
     </inferredMetricsTieBreakers>
 </document>

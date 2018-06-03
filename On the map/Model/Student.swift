@@ -24,6 +24,7 @@ class Student: NSObject {
     static var exist = false
     static var studentCity = ""
     static var studentState = ""
+    static var objectId = ""
     
     override init() {
         super.init()

@@ -157,11 +157,29 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             pinView!.canShowCallout = true
             pinView!.pinTintColor = .red
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+
         } else {
             pinView!.annotation = annotation
         }
 
         return pinView
+    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+
+        guard let subtitle = view.annotation?.subtitle!, let url = URL(string: subtitle) else {
+            return
+        }
+
+        if (UIApplication.shared.canOpenURL(url)) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            let alert = UIAlertController(title: "Invalid Link", message: nil, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+            alert.addAction(alertAction)
+            present(alert, animated: true, completion: nil)
+        }
+
     }
     
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
@@ -293,7 +311,10 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
+            return
+        }
+        self.present(loginViewController, animated: true, completion: nil)
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
@@ -329,7 +350,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
                     num += 1
                     print(num)
                     if student["uniqueKey"] as? String == Student.uniqueKey {
-                        self.exist = true
+                        Student.exist = true
                         print(student["uniqueKey"] as? String)
                         print("I got it")
                         guard let studentFirstName = student["firstName"] as? String else {
@@ -338,13 +359,20 @@ class MapViewController: UIViewController, MKMapViewDelegate{
                         guard let studentLastName = student["lastName"] as? String else {
                             return
                         }
+                        guard let objectId = student["objectId"] as? String else {
+                            return
+                        }
                         Student.firstName = studentFirstName
                         Student.lastName = studentLastName
+                        Student.objectId = objectId
+                        print(studentFirstName)
+                        print(studentLastName)
+                        print(objectId)
                     }
                 }
 
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-                    if self.exist {
+                    if Student.exist {
                         let alert = UIAlertController(title: nil, message: "User \"\(Student.firstName) \(Student.lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
                         let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
                                 self.performSegue(withIdentifier: "addLocation", sender: nil)
@@ -359,21 +387,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         task.resume()
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let subtitle = view.annotation?.subtitle!, let url = URL(string: subtitle) else {
-            return
-        }
-        
-        if (UIApplication.shared.canOpenURL(url)) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            let alert = UIAlertController(title: "Invalid Link", message: nil, preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-            alert.addAction(alertAction)
-            present(alert, animated: true, completion: nil)
-        }
 
-    }
     
     
 //        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {

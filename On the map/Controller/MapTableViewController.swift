@@ -339,7 +339,10 @@ class MapTableViewController: UITableViewController {
     
 
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
+            return
+        }
+        self.present(loginViewController, animated: true, completion: nil)
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
@@ -374,7 +377,6 @@ class MapTableViewController: UITableViewController {
                     num += 1
                     print(num)
                     if student["uniqueKey"] as? String == Student.uniqueKey {
-                        exist = true
                         Student.exist = true
                         print(student["uniqueKey"] as? String)
                         print("I got it")
@@ -384,8 +386,12 @@ class MapTableViewController: UITableViewController {
                         guard let studentLastName = student["lastName"] as? String else {
                             return
                         }
+                        guard let objectId = student["objectId"] as? String else {
+                            return
+                        }
                         Student.firstName = studentFirstName
                         Student.lastName = studentLastName
+                        Student.objectId = objectId
                     }
                 }
                 
