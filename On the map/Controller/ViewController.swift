@@ -84,7 +84,26 @@ class ViewController: UIViewController {
                 if registered {
                     print("User is registered")
                     self.performSegue(withIdentifier: "ToTabView", sender: nil)
-                    self.deleteSession()
+                    
+                    //****************
+//                    let request = URLRequest(url: URL(string: "https://www.udacity.com/api/users/3903878747")!)
+//                    let session = URLSession.shared
+//                    let task = session.dataTask(with: request) { data, response, error in
+//                        if error != nil { // Handle error...
+//                            return
+//                        }
+//                        let range = Range(5..<data!.count)
+//                        DispatchQueue.main.async {
+//                            let newData = data?.subdata(in: range) /* subset response data! */
+//                            print(String(data: newData!, encoding: .utf8)!)
+//                        }
+//                        
+//                    }
+//                    task.resume()
+                    //******************************
+                    
+                    
+//                    self.deleteSession()
                     print("Session id has been deleted!")
                     // 1558413710Sc060bb9f76ffabfd8950a4d771450412
                 } else {
