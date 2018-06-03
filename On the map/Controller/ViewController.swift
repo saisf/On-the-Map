@@ -116,6 +116,10 @@ class ViewController: UIViewController {
         task.resume()
 
     }
+    @IBAction func signupButton(_ sender: UIButton) {
+        let signupURL = URL(string: "https://auth.udacity.com/sign-up")!
+        UIApplication.shared.open(signupURL, options: [:], completionHandler: nil)
+    }
     
     func deleteSession() {
         var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
