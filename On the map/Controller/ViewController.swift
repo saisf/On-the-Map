@@ -103,7 +103,7 @@ class ViewController: UIViewController {
                     //******************************
                     
                     
-//                    self.deleteSession()
+                    self.deleteSession()
                     print("Session id has been deleted!")
                     // 1558413710Sc060bb9f76ffabfd8950a4d771450412
                 } else {

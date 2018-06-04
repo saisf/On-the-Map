@@ -396,7 +396,7 @@ class MapTableViewController: UITableViewController {
                 }
                 
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-                if exist {
+                if Student.exist {
                     let alert = UIAlertController(title: nil, message: "User \"\(Student.firstName) \(Student.lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
                     let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
                         self.performSegue(withIdentifier: "ToAddLocationFromTable", sender: nil)

@@ -91,70 +91,73 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
     }
     @IBAction func finishButton(_ sender: UIButton) {
         // if not exist
-//        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 80, height: 80)
-//        NVActivityIndicatorView.DEFAULT_TYPE = .orbit
-//        NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
-//        guard let latitude = Student.newLocation?.latitude, let longitude = Student.newLocation?.longitude else {
-//            return
-//        }
-//        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
-//        request.httpMethod = "POST"
-//        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-//        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"\(Student.studentCity), \(Student.studentState)\", \"mediaURL\": \"\(Student.mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: .utf8)
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { data, response, error in
-//            if error != nil { // Handle error…
-//                return
-//            }
-//            DispatchQueue.main.async {
-//                print(String(data: data!, encoding: .utf8)!)
-//                guard let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
-//                    return
-//                }
-//                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-//                self.present(tabViewController, animated: true, completion: nil)
-//            }
-//
-//        }
-//        task.resume()
+        
         
         
         // if exist
-        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 80, height: 80)
-                NVActivityIndicatorView.DEFAULT_TYPE = .orbit
-                NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
-        guard let latitude = Student.newLocation?.latitude, let longitude = Student.newLocation?.longitude else {
-            return
-        }
-        let objectId = "oAjNASo7n7"
-        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/\(Student.objectId)"
-        let url = URL(string: urlString)
-        var request = URLRequest(url: url!)
-        request.httpMethod = "PUT"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"uniqueKey\": \"\(Student.uniqueKey)\", \"firstName\": \"\(Student.firstName)\", \"lastName\": \"\(Student.lastName)\",\"mapString\": \"\(Student.studentCity), \(Student.studentState)\", \"mediaURL\": \"\(Student.mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: .utf8)
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            if error != nil { // Handle error…
+        if Student.exist {
+            NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 80, height: 80)
+            NVActivityIndicatorView.DEFAULT_TYPE = .orbit
+            NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
+            guard let latitude = Student.newLocation?.latitude, let longitude = Student.newLocation?.longitude else {
                 return
             }
-            DispatchQueue.main.async {
-                print(String(data: data!, encoding: .utf8)!)
-                guard let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
-                                        return
-                                    }
+            let objectId = "oAjNASo7n7"
+            let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/\(Student.objectId)"
+            let url = URL(string: urlString)
+            var request = URLRequest(url: url!)
+            request.httpMethod = "PUT"
+            request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "{\"uniqueKey\": \"\(Student.uniqueKey)\", \"firstName\": \"\(Student.firstName)\", \"lastName\": \"\(Student.lastName)\",\"mapString\": \"\(Student.studentCity), \(Student.studentState)\", \"mediaURL\": \"\(Student.mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: .utf8)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error…
+                    return
+                }
+                DispatchQueue.main.async {
+                    print(String(data: data!, encoding: .utf8)!)
+                    guard let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
+                        return
+                    }
 
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-                self.present(tabViewController, animated: true, completion: nil)
+                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                    self.present(tabViewController, animated: true, completion: nil)
+                }
+
             }
-            
+            task.resume()
+        } else {
+            NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 80, height: 80)
+            NVActivityIndicatorView.DEFAULT_TYPE = .orbit
+            NVActivityIndicatorPresenter.sharedInstance.startAnimating(MapViewController.activityData)
+            guard let latitude = Student.newLocation?.latitude, let longitude = Student.newLocation?.longitude else {
+                return
+            }
+            var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
+            request.httpMethod = "POST"
+            request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "{\"uniqueKey\": \"\(Student.uniqueKey)\", \"firstName\": \"\(Student.firstName)\", \"lastName\": \"\(Student.lastName)\",\"mapString\": \"\(Student.studentCity), \(Student.studentState)\", \"mediaURL\": \"\(Student.mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: .utf8)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error…
+                    return
+                }
+                DispatchQueue.main.async {
+                    print(String(data: data!, encoding: .utf8)!)
+                    guard let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
+                        return
+                    }
+                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                    self.present(tabViewController, animated: true, completion: nil)
+                }
+                
+            }
+            task.resume()
         }
-        task.resume()
-        
     }
     
     func addNewLocation() {
