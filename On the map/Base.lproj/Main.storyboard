@@ -159,29 +159,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6s2-II-fib">
-                                <rect key="frame" x="124.66666666666666" y="123" width="125.66666666666666" height="157"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="6s2-II-fib">
+                                <rect key="frame" x="87.666666666666686" y="123" width="200" height="220"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="world" translatesAutoresizingMaskIntoConstraints="NO" id="L7T-Pf-B29">
-                                        <rect key="frame" x="36.999999999999986" y="0.0" width="52" height="67"/>
+                                        <rect key="frame" x="73.999999999999986" y="0.0" width="52" height="67"/>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jUh-pG-d8j">
-                                        <rect key="frame" x="0.0" y="67" width="125.66666666666667" height="90"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jUh-pG-d8j">
+                                        <rect key="frame" x="0.0" y="120" width="200" height="100"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3kY-DW-dle">
-                                                <rect key="frame" x="0.0" y="0.0" width="125.66666666666667" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Website" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6xv-b9-MeO">
-                                                <rect key="frame" x="0.0" y="30" width="125.66666666666667" height="30"/>
+                                                <rect key="frame" x="0.0" y="35" width="200" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeX-p5-noV">
-                                                <rect key="frame" x="0.0" y="60" width="125.66666666666667" height="30"/>
+                                                <rect key="frame" x="0.0" y="70" width="200" height="30"/>
                                                 <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="FIND LOCATION">
                                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -193,6 +193,12 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="jUh-pG-d8j" firstAttribute="leading" secondItem="6s2-II-fib" secondAttribute="leading" id="NYO-rT-sOf"/>
+                                    <constraint firstAttribute="trailing" secondItem="jUh-pG-d8j" secondAttribute="trailing" id="R48-fW-gs9"/>
+                                    <constraint firstAttribute="height" constant="220" id="T3k-QM-dfS"/>
+                                    <constraint firstAttribute="width" constant="200" id="Zla-pR-wkX"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -204,6 +210,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Add Location" id="4uh-2y-Jo8"/>
                     <connections>
+                        <outlet property="findLocationButton" destination="SeX-p5-noV" id="gcc-r2-dYW"/>
                         <outlet property="locationTextField" destination="3kY-DW-dle" id="jaI-9w-Ccl"/>
                         <outlet property="mediaURL" destination="6xv-b9-MeO" id="JJ7-nj-Aig"/>
                         <segue destination="sKU-m9-3re" kind="show" identifier="ConfirmLocationViewController" id="eQl-Dp-uQu"/>

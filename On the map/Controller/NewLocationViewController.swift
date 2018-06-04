@@ -15,10 +15,13 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var mediaURL: UITextField!
+    @IBOutlet weak var findLocationButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         locationTextField.delegate = self
         mediaURL.delegate = self
+        findLocationButton.clipsToBounds = true
+        findLocationButton.layer.cornerRadius = 10
 //        print(exist)
 //        getCoordinateFrom(address: "Kalamazoo, Michigan") { (coordinate, error) in
 //            guard let coordiante = coordinate, error == nil else {
