@@ -13,11 +13,13 @@ class ViewController: UIViewController {
 
     
     @IBOutlet weak var usernameTextField: UITextField!
-    
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var login: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        login.clipsToBounds = true
+        login.layer.cornerRadius = 10
         // Do any additional setup after loading the view, typically from a nib.
     }
     
