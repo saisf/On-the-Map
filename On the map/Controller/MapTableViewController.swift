@@ -343,6 +343,7 @@ class MapTableViewController: UITableViewController {
             return
         }
         self.present(loginViewController, animated: true, completion: nil)
+        Student.Constant.deleteSession()
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {

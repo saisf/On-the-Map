@@ -87,7 +87,6 @@
 				EC341F5E20AF8AE0009A631E /* Model */,
 				EC341F5F20AF8AF0009A631E /* View */,
 				EC341F6020AF8AFE009A631E /* Controller */,
-				EC341F5020AF7107009A631E /* Main.storyboard */,
 				EC341F5320AF7107009A631E /* Assets.xcassets */,
 				EC341F5520AF7107009A631E /* LaunchScreen.storyboard */,
 				EC341F5820AF7107009A631E /* Info.plist */,
@@ -108,6 +107,7 @@
 		EC341F5F20AF8AF0009A631E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC341F5020AF7107009A631E /* Main.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
