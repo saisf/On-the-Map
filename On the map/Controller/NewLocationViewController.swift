@@ -20,7 +20,6 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
         mediaURL.delegate = self
         findLocationButton.clipsToBounds = true
         findLocationButton.layer.cornerRadius = 10
-
         Student.Constant.getStudentBasicInformation()
     }
 
@@ -44,7 +43,6 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
         guard let mediaURL = mediaURL.text else {
             return
         }
-        
         if verifyUrl(urlString: mediaURL){
             getCoordinate(completion: { (coordinate) in
                 Student.newLocation = coordinate
@@ -57,7 +55,6 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
             alert.addAction(alertAction)
             present(alert, animated: true, completion: nil)
         }
-        
     }
     
     func getCoordinate(completion: @escaping(_ studentCoordinate: CLLocationCoordinate2D)-> Void) {

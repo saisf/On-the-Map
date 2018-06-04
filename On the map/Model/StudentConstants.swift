@@ -487,7 +487,7 @@ extension Student {
         }
         
          // MARK: Get Student basic information
-        static func getStudentBasicInformation() {
+        static func getStudentBasicInformation(){
             let request = URLRequest(url: URL(string: "https://www.udacity.com/api/users/\(Student.uniqueKey)")!)
             let session = URLSession.shared
             let task = session.dataTask(with: request) { data, response, error in
@@ -509,5 +509,66 @@ extension Student {
             task.resume()
         }
         
+        // MARK: Update Student existing location
+        static func updateExistingLocation(viewController: UIViewController){
+            Student.Constant.activityIndicator(loading: true)
+            guard let latitude = Student.newLocation?.latitude, let longitude = Student.newLocation?.longitude else {
+                return
+            }
+            let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/\(Student.objectId)"
+            let url = URL(string: urlString)
+            var request = URLRequest(url: url!)
+            request.httpMethod = "PUT"
+            request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "{\"uniqueKey\": \"\(Student.uniqueKey)\", \"firstName\": \"\(Student.firstName)\", \"lastName\": \"\(Student.lastName)\",\"mapString\": \"\(Student.studentCity), \(Student.studentState)\", \"mediaURL\": \"\(Student.mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: .utf8)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error…
+                    return
+                }
+                DispatchQueue.main.async {
+                    print(String(data: data!, encoding: .utf8)!)
+                    guard let tabViewController = viewController.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
+                        return
+                    }
+                    
+                    Student.Constant.activityIndicator(loading: false)
+                    viewController.present(tabViewController, animated: true, completion: nil)
+                }
+                
+            }
+            task.resume()
+        }
+        
+        static func addNewLocation(viewController: UIViewController){
+            Student.Constant.activityIndicator(loading: true)
+            guard let latitude = Student.newLocation?.latitude, let longitude = Student.newLocation?.longitude else {
+                return
+            }
+            var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
+            request.httpMethod = "POST"
+            request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "{\"uniqueKey\": \"\(Student.uniqueKey)\", \"firstName\": \"\(Student.firstName)\", \"lastName\": \"\(Student.lastName)\",\"mapString\": \"\(Student.studentCity), \(Student.studentState)\", \"mediaURL\": \"\(Student.mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: .utf8)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error…
+                    return
+                }
+                DispatchQueue.main.async {
+                    print(String(data: data!, encoding: .utf8)!)
+                    guard let tabViewController = viewController.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
+                        return
+                    }
+                    Student.Constant.activityIndicator(loading: false)
+                    viewController.present(tabViewController, animated: true, completion: nil)
+                }
+                
+            }
+            task.resume()
+        }
     }
 }
