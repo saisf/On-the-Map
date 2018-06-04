@@ -194,20 +194,89 @@ extension Student {
                     }
                     
                     NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-//                    if exist {
-//                        let alert = UIAlertController(title: nil, message: "User \"\(firstName) \(lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
-//                        let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: nil)
-//                        let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//                        alert.addAction(overwriteAlertAction)
-//                        alert.addAction(cancelAlertAction)
-//                        viewController.present(alert, animated: true, completion: nil)
-//                    }
-                    
+
                     
                 }
             }
             
             task.resume()
         }
+        
+        static func deleteSession() {
+            var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+            request.httpMethod = "DELETE"
+            var xsrfCookie: HTTPCookie? = nil
+            let sharedCookieStorage = HTTPCookieStorage.shared
+            for cookie in sharedCookieStorage.cookies! {
+                if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+            }
+            if let xsrfCookie = xsrfCookie {
+                request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+            }
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error…
+                    return
+                }
+                let range = Range(5..<data!.count)
+                let newData = data?.subdata(in: range) /* subset response data! */
+                print(String(data: newData!, encoding: .utf8)!)
+            }
+            task.resume()
+        }
+        
+        // MARK: Open Safari with given url
+        static func openSafari(url: URL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        
+        // MARK: Authenticate user before allowing to use the app
+        static func authenticateStudent(username: String, password: String, viewController: UIViewController) {
+            var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: .utf8)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error…
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    let range = Range(5..<data!.count)
+                    let newData = data?.subdata(in: range) /* subset response data! */
+                    print(String(data: newData!, encoding: .utf8)!)
+                    var parseResult: AnyObject! = nil
+                    
+                    do {
+                        parseResult = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as AnyObject
+                    } catch {
+                        print("Error: \(error)")
+                    }
+                    guard let sessionID = parseResult?["session"] as? [String: String] else {
+                        let alert = UIAlertController(title: "Invalid Email or Password", message: nil, preferredStyle: .alert)
+                        let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+                        alert.addAction(alertAction)
+                        viewController.present(alert, animated: true, completion: nil)
+                        return
+                    }
+                    guard let session = sessionID["id"] else {
+                        return
+                    }
+                    guard let account = parseResult?["account"] as? [String: AnyObject], let registered = account["registered"] as? Bool, let uniqueKey = account["key"] as? String else {
+                        return
+                    }
+                    Student.uniqueKey = uniqueKey
+                    
+                    if registered {
+                        viewController.performSegue(withIdentifier: "ToTabView", sender: nil)
+                        Student.Constant.deleteSession()
+                    }
+                }
+            }
+            task.resume()
+        }
+        
     }
 }
