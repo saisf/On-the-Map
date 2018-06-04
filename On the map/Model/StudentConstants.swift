@@ -486,5 +486,28 @@ extension Student {
             task.resume()
         }
         
+         // MARK: Get Student basic information
+        static func getStudentBasicInformation() {
+            let request = URLRequest(url: URL(string: "https://www.udacity.com/api/users/\(Student.uniqueKey)")!)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if error != nil { // Handle error...
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    let range = Range(5..<data!.count)
+                    let newData = data?.subdata(in: range) /* subset response data! */
+                    let parseResult = try? JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as AnyObject
+                    guard let user = parseResult!["user"] as? [String:AnyObject], let lastName = user["last_name"] as? String, let firstName = user["first_name"] as? String else {
+                        return
+                    }
+                    print("\(firstName) \(lastName)" )
+                }
+                
+            }
+            task.resume()
+        }
+        
     }
 }
