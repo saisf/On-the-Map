@@ -64,6 +64,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
-        Student.Constant.verifyUserLocationAlreadyExist(viewController: self)
+        Student.Constant.verifyUserLocationAlreadyExist(viewController: self, segueIdentifier: "addLocation")
     }
 }

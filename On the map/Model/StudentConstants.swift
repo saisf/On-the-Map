@@ -292,7 +292,7 @@ extension Student {
         }
         
         // MARK: Get student locations function
-        static func getStudentLocations(mapView: MKMapView) {
+        static func getStudentLocations(mapView: MKMapView?) {
             Student.Constant.activityIndicator(loading: true)
             
             var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
@@ -393,21 +393,25 @@ extension Student {
                         StudentLocation.studentLocations.append(studentLocation)
                         
                         print("student location saved successfully")
-                        let latt = CLLocationDegrees(lat)
-                        let longg = CLLocationDegrees(long)
-                        let coordinate = CLLocationCoordinate2D(latitude: latt, longitude: longg)
-                        
-                        let annotation = MKPointAnnotation()
-                        annotation.coordinate = coordinate
-                        annotation.title = "\(first) \(last)"
-                        
-                        annotation.subtitle = medURL
-                        
-                        mapView.addAnnotation(annotation)
+                        if mapView != nil {
+                            let latt = CLLocationDegrees(lat)
+                            let longg = CLLocationDegrees(long)
+                            let coordinate = CLLocationCoordinate2D(latitude: latt, longitude: longg)
+                            
+                            let annotation = MKPointAnnotation()
+                            annotation.coordinate = coordinate
+                            annotation.title = "\(first) \(last)"
+                            
+                            annotation.subtitle = medURL
+                            
+                            mapView?.addAnnotation(annotation)
+                        }
                     }
                     
                     Student.Constant.activityIndicator(loading: false)
-                    mapView.reloadInputViews()
+                    if mapView != nil {
+                        mapView?.reloadInputViews()
+                    }
                 }
             }
             task.resume()
@@ -415,7 +419,7 @@ extension Student {
         }
         
         // MARK: Verify if student has previously posted location
-        static func verifyUserLocationAlreadyExist(viewController: UIViewController) {
+        static func verifyUserLocationAlreadyExist(viewController: UIViewController, segueIdentifier: String) {
             // REQUEST
             var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=500&&order=-updatedAt")!)
             request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -470,7 +474,7 @@ extension Student {
                     if Student.exist {
                         let alert = UIAlertController(title: nil, message: "User \"\(Student.firstName) \(Student.lastName)\" Has Already Posted a Student Location. Would you like to Overwrite Their Location?", preferredStyle: .alert)
                         let overwriteAlertAction = UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
-                            viewController.performSegue(withIdentifier: "addLocation", sender: nil)
+                            viewController.performSegue(withIdentifier: segueIdentifier, sender: nil)
                         })
                         let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                         alert.addAction(overwriteAlertAction)
