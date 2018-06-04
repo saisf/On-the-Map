@@ -12,10 +12,13 @@ import NVActivityIndicatorView
 
 class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var finish: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        finish.clipsToBounds = true
+        finish.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
 //        guard let coordinate = Student.newLocation else {
 //            return

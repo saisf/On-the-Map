@@ -262,6 +262,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Add Location" id="nrf-cM-WJc"/>
                     <connections>
+                        <outlet property="finish" destination="we9-QO-lTK" id="usP-Fv-wDn"/>
                         <outlet property="mapView" destination="Xtp-en-S5s" id="cVF-Ia-yJh"/>
                     </connections>
                 </viewController>
