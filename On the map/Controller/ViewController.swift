@@ -27,13 +27,10 @@ class ViewController: UIViewController {
         passwordTextField.text = ""
     }
 
-    
-    
     @IBAction func loginButton(_ sender: UIButton) {
         guard let user = usernameTextField.text, let password = passwordTextField.text else {
             return
         }
-        //        Student.Constant.authenticateStudent(username: user, password: password, viewController: self)
         
         // MARK: Authenticate User
         APIClient.sharedInstance.authenticateStudent(username: user, password: password) { (success, uniqueKey, error) in
@@ -54,7 +51,7 @@ class ViewController: UIViewController {
     
     @IBAction func signupButton(_ sender: UIButton) {
         let signupURL = URL(string: "https://auth.udacity.com/sign-up")!
-        Student.Constant.openSafari(url: signupURL)
+        UIApplication.shared.open(signupURL, options: [:], completionHandler: nil)
     }
     
     fileprivate func popAlert() {

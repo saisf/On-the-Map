@@ -19,6 +19,7 @@
 		EC341F6620B32DCC009A631E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F6520B32DCC009A631E /* MapViewController.swift */; };
 		EC341F6820B47946009A631E /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC341F6720B47946009A631E /* StudentLocation.swift */; };
 		EC4ACA5A20B4A31B00973B91 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4ACA5920B4A31B00973B91 /* MapTableViewController.swift */; };
+		EC5901CC20C7A12800CA3388 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5901CB20C7A12800CA3388 /* Convenience.swift */; };
 		EC762F7720C07C320093769B /* ConfirmLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC762F7620C07C320093769B /* ConfirmLocationViewController.swift */; };
 		EC762F7920C6F6540093769B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC762F7820C6F6540093769B /* APIClient.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		EC341F6520B32DCC009A631E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		EC341F6720B47946009A631E /* StudentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 		EC4ACA5920B4A31B00973B91 /* MapTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewController.swift; sourceTree = "<group>"; };
+		EC5901CB20C7A12800CA3388 /* Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
 		EC762F7620C07C320093769B /* ConfirmLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewController.swift; sourceTree = "<group>"; };
 		EC762F7820C6F6540093769B /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +105,7 @@
 				EC341F6320B0F342009A631E /* StudentConstants.swift */,
 				EC341F6720B47946009A631E /* StudentLocation.swift */,
 				EC762F7820C6F6540093769B /* APIClient.swift */,
+				EC5901CB20C7A12800CA3388 /* Convenience.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				EC341F6220B0EED1009A631E /* Student.swift in Sources */,
 				EC251BD320BFBAF00018AAE9 /* NewLocationViewController.swift in Sources */,
 				EC762F7720C07C320093769B /* ConfirmLocationViewController.swift in Sources */,
+				EC5901CC20C7A12800CA3388 /* Convenience.swift in Sources */,
 				EC341F6620B32DCC009A631E /* MapViewController.swift in Sources */,
 				EC341F4D20AF7107009A631E /* AppDelegate.swift in Sources */,
 				EC341F6820B47946009A631E /* StudentLocation.swift in Sources */,
