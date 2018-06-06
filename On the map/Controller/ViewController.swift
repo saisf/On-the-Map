@@ -27,18 +27,41 @@ class ViewController: UIViewController {
         passwordTextField.text = ""
     }
 
+    
+    
     @IBAction func loginButton(_ sender: UIButton) {
         guard let user = usernameTextField.text, let password = passwordTextField.text else {
             return
         }
+        //        Student.Constant.authenticateStudent(username: user, password: password, viewController: self)
         
         // MARK: Authenticate User
-        Student.Constant.authenticateStudent(username: user, password: password, viewController: self)
+        APIClient.sharedInstance.authenticateStudent(username: user, password: password) { (success, uniqueKey, error) in
+            guard (error == nil) else {
+                self.popAlert()
+                return
+            }
+            guard let uniqueKey = uniqueKey else {
+                return
+            }
+            if success {
+                Student.uniqueKey = uniqueKey
+                print(Student.uniqueKey)
+                self.performSegue(withIdentifier: "ToTabView", sender: nil)
+            }
+        }
     }
     
     @IBAction func signupButton(_ sender: UIButton) {
         let signupURL = URL(string: "https://auth.udacity.com/sign-up")!
         Student.Constant.openSafari(url: signupURL)
+    }
+    
+    fileprivate func popAlert() {
+        let alert = UIAlertController(title: "Invalid Email or Password", message: nil, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
