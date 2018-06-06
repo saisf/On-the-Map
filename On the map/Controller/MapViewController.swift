@@ -24,7 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         Convenience.sharedInstance.activityIndicator(loading: true)
         
         // MARK: Get student locations
-        APIClient.sharedInstance.getStudentLocations(mapView: mapView) { (success, results, error) in
+        APIClient.sharedInstance.getStudentLocations { (success, results, error)  in
             if error != nil {
                 return
             }
@@ -65,7 +65,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
         Convenience.sharedInstance.activityIndicator(loading: true)
-        APIClient.sharedInstance.getStudentLocations(mapView: mapView) { (success, results, error) in
+        APIClient.sharedInstance.getStudentLocations { (success, results, error) in
             if error != nil {
                 return
             }
@@ -129,6 +129,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     
     // MARK: Add annotations to map
     func addAnnotation(results: [[String:AnyObject]]) {
+        StudentLocation.studentLocations.removeAll()
         for student in results {
             let studentLocation = StudentLocation()
             var first = ""

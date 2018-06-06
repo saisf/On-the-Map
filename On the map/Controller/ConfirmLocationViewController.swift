@@ -23,6 +23,8 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         guard let coordinate = Student.newLocation else {
             return
         }
+        
+        // Add annotation of confirming location
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         mapView?.addAnnotation(annotation)
@@ -43,8 +45,8 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
                 return
             }
             if placemarks.count > 0 {
-                let pm = placemarks[0]
-                guard let city = pm.locality, let state = pm.administrativeArea, let country = pm.country else {
+                let userLocation = placemarks[0]
+                guard let city = userLocation.locality, let state = userLocation.administrativeArea, let country = userLocation.country else {
                     return
                 }
                 annotation.title = "\(city), \(state), \(country)"
@@ -72,11 +74,35 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         pinView?.canShowCallout = true
         return pinView
     }
+    
     @IBAction func finishButton(_ sender: UIButton) {
+        Convenience.sharedInstance.activityIndicator(loading: true)
         if Student.exist {
-            Student.Constant.updateExistingLocation(viewController: self)
+            APIClient.sharedInstance.updateExistingLocation(completion: { (success, error) in
+                if error != nil { // Handle error…
+                    return
+                }
+                if success {
+                    guard let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
+                        return
+                    }
+                    Convenience.sharedInstance.activityIndicator(loading: false)
+                    self.present(tabViewController, animated: true, completion: nil)
+                }
+            })
         } else {
-            Student.Constant.addNewLocation(viewController: self)
+            APIClient.sharedInstance.addNewLocation(completion: { (success, error) in
+                if error != nil { // Handle error…
+                    return
+                }
+                if success {
+                    guard let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
+                        return
+                    }
+                    Convenience.sharedInstance.activityIndicator(loading: false)
+                    self.present(tabViewController, animated: true, completion: nil)
+                }
+            })
         }
     }
 }

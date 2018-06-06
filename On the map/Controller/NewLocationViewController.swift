@@ -20,7 +20,19 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
         mediaURL.delegate = self
         findLocationButton.clipsToBounds = true
         findLocationButton.layer.cornerRadius = 10
-        Student.Constant.getStudentBasicInformation()
+        
+        // MARK: Get user basic information
+        APIClient.sharedInstance.getStudentBasicInformation { (success, results, error) in
+            if error != nil { // Handle error...
+                return
+            }
+            guard let user = results!["user"] as? [String:AnyObject], let lastName = user["last_name"] as? String, let firstName = user["first_name"] as? String else {
+                return
+            }
+            Student.firstName = firstName
+            Student.lastName = lastName
+            print("\(Student.firstName) \(Student.lastName)")
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -32,13 +44,7 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
-    
-    func getCoordinateFrom(address: String, completion: @escaping(_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ()) {
-        CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
-            completion(placemarks?.first?.location?.coordinate, error)
-        }
-    }
-    
+
     @IBAction func findLocation(_ sender: UIButton) {
         guard let mediaURL = mediaURL.text else {
             return
@@ -54,6 +60,13 @@ class NewLocationViewController: UIViewController, UITextFieldDelegate {
             let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
             alert.addAction(alertAction)
             present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // FUNCTION : Get coordinate from address string
+    func getCoordinateFrom(address: String, completion: @escaping(_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ()) {
+        CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
+            completion(placemarks?.first?.location?.coordinate, error)
         }
     }
     
