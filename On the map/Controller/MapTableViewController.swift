@@ -47,6 +47,7 @@ class MapTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var first = "[No First Name]"
         var last = "[No Last Name]"
+        var media = "[No Media URL]"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let studentLocation = StudentLocation.studentLocations[indexPath.row]
@@ -56,8 +57,11 @@ class MapTableViewController: UITableViewController {
         if let lastName = studentLocation.lastName {
             last = lastName
         }
+        if let mediaURL = studentLocation.mediaURL {
+            media = mediaURL
+        }
         cell.textLabel?.text = "\(first) \(last)"
-        cell.detailTextLabel?.text = studentLocation.mediaURL
+        cell.detailTextLabel?.text = media
 
         return cell
     }
