@@ -59,19 +59,8 @@ class APIClient: NSObject{
                 guard let data = data else {return}
                 guard let jsonResults = try? JSONDecoder().decode(Results.self, from: data) else {return}
                 let studentResults = jsonResults.results
-//                guard let infoResults = jsonResults  else {return}
-//                let studentResults = infoResults.results
-                //            DispatchQueue.main.async {
-                //                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-                //                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
-                //                    return
-                //                }
-                //                completion(true, result, nil)
                 completion(true, studentResults, nil)
-                            }
-//
-            
-            
+            }
         }
         task.resume()
     }
@@ -93,23 +82,8 @@ class APIClient: NSObject{
                 guard let data = data else {return}
                 guard let jsonResults = try? JSONDecoder().decode(Results.self, from: data) else {return}
                 let studentResults = jsonResults.results
-                //                guard let infoResults = jsonResults  else {return}
-                //                let studentResults = infoResults.results
-                //            DispatchQueue.main.async {
-                //                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-                //                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
-                //                    return
-                //                }
-                //                completion(true, result, nil)
                 completion(studentResults, nil)
             }
-//            DispatchQueue.main.async {
-//                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-//                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
-//                    return
-//                }
-//                completion(result, nil)
-//            }
         }
         task.resume()
     }
@@ -177,13 +151,6 @@ class APIClient: NSObject{
                 return
             }
             completion(true, nil)
-//            DispatchQueue.main.async {
-//                guard let tabViewController = viewController.storyboard?.instantiateViewController(withIdentifier: "TabViewController") else {
-//                    return
-//                }
-//                Student.Constant.activityIndicator(loading: false)
-//                viewController.present(tabViewController, animated: true, completion: nil)
-//            }
         }
         task.resume()
     }
