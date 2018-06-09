@@ -26,6 +26,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         // MARK: Get student locations
         APIClient.sharedInstance.getStudentLocations { (success, results, error)  in
             if error != nil {
+                Convenience.sharedInstance.activityIndicator(loading: false)
+                self.fetchingFailureAlert()
                 return
             }
             guard let results = results else {
@@ -67,6 +69,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         Convenience.sharedInstance.activityIndicator(loading: true)
         APIClient.sharedInstance.getStudentLocations { (success, results, error) in
             if error != nil {
+                Convenience.sharedInstance.activityIndicator(loading: false)
+                self.fetchingFailureAlert()
                 return
             }
             guard let results = results else {
@@ -81,11 +85,12 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
-        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
-            return
-        }
-        self.present(loginViewController, animated: true, completion: nil)
-        APIClient.sharedInstance.deleteSession()
+//        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
+//            return
+//        }
+//        self.present(loginViewController, animated: true, completion: nil)
+        logoutAlert()
+        
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
@@ -131,7 +136,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     // MARK: Add annotations to map
-    
     func addAnnotation(results: [StudentInformation]) {
         UserManager.sharedInstance.locations.removeAll()
         for result in results {
@@ -186,62 +190,30 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             self.mapView?.addAnnotation(annotation)
         }
     }
-//    func addAnnotation(results: [[String:AnyObject]]) {
-//        StudentLocation.studentLocations.removeAll()
-//        for student in results {
-//            let studentLocation = StudentLocation()
-//            var first = ""
-//            var last = ""
-//            var lat = 0.0
-//            var long = 0.0
-//            var medURL = ""
-//
-//            if let firstName = student["firstName"] as? String {
-//                studentLocation.firstName = firstName
-//                first = firstName
-//            }
-//            if let lastName = student["lastName"] as? String {
-//                studentLocation.lastName = lastName
-//                last = lastName
-//            }
-//            if let latitude = student["latitude"] as? Double {
-//                studentLocation.latitude = latitude
-//                lat = latitude
-//            }
-//            if let longitude = student["longitude"] as? Double {
-//                studentLocation.longitude = longitude
-//                long = longitude
-//            }
-//            if let mapString = student["mapString"] as? String {
-//                studentLocation.mapString = mapString
-//            }
-//            if let mediaURL = student["mediaURL"] as? String {
-//                studentLocation.mediaURL = mediaURL
-//                medURL = mediaURL
-//            }
-//            if let objectId = student["objectId"] as? String {
-//                studentLocation.objectId = objectId
-//            }
-//            if let uniqueKey = student["uniqueKey"] as? String {
-//                studentLocation.uniqueKey = uniqueKey
-//            }
-//            if let createdAt = student["createdAt"] as? String {
-//                studentLocation.createdAt = createdAt
-//            }
-//            if let updatedAt = student["updatedAt"] as? String {
-//                studentLocation.updatedAt = updatedAt
-//            }
-//            StudentLocation.studentLocations.append(studentLocation)
-//            let latt = CLLocationDegrees(lat)
-//            let longg = CLLocationDegrees(long)
-//            let coordinate = CLLocationCoordinate2D(latitude: latt, longitude: longg)
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = coordinate
-//            annotation.title = "\(first) \(last)"
-//            annotation.subtitle = medURL
-//            self.mapView?.addAnnotation(annotation)
-//        }
-//    }
+    
+    // MARK: Fetching data failure alert
+    func fetchingFailureAlert() {
+        let alert = UIAlertController(title: "Connection Failed", message: "Please Try Again", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: Logout confirmation alert
+    func logoutAlert() {
+        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
+            return
+        }
+        let alert = UIAlertController(title: nil, message: "Do you want to exit?", preferredStyle: .alert)
+        let overwriteAlertAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
+            self.present(loginViewController, animated: true, completion: nil)
+            APIClient.sharedInstance.deleteSession()
+        })
+        let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(overwriteAlertAction)
+        alert.addAction(cancelAlertAction)
+        self.present(alert, animated: true, completion: nil)
+    }
     
     // MARK: Alert when mediaURL cannot be opened
     fileprivate func popAlert() {
@@ -262,4 +234,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         alert.addAction(cancelAlertAction)
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
 }

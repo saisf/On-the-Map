@@ -21,14 +21,14 @@ class MapTableViewController: UITableViewController {
         // MARK: Get student locations
         APIClient.sharedInstance.getStudentLocations { (success, results, error)  in
             if error != nil {
+                Convenience.sharedInstance.activityIndicator(loading: false)
+                self.fetchingFailureAlert()
                 return
             }
             guard let results = results else {
                 return
             }
             if success {
-//                UserManager.sharedInstance.locations.removeAll()
-//                UserManager.sharedInstance.locations = results
                 self.loadCellData(results: results)
                 Convenience.sharedInstance.activityIndicator(loading: false)
             }
@@ -37,13 +37,11 @@ class MapTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-//        return StudentLocation.studentLocations.count
         return UserManager.sharedInstance.locations.count
     }
     
@@ -53,7 +51,6 @@ class MapTableViewController: UITableViewController {
         var media = "[No Media URL]"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-//        let studentLocation = StudentLocation.studentLocations[indexPath.row]
         let studentLocation = UserManager.sharedInstance.locations[indexPath.row]
         if let firstName = studentLocation.firstName {
             first = firstName
@@ -66,19 +63,11 @@ class MapTableViewController: UITableViewController {
         }
         cell.textLabel?.text = "\(first) \(last)"
         cell.detailTextLabel?.text = media
-        
-//        first = studentLocation.firstName
-//        last = studentLocation.lastName
-//
-//        media = studentLocation.mediaURL
-//        cell.textLabel?.text = "\(first) \(last)"
-//        cell.detailTextLabel?.text = media
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let studentLocation = StudentLocation.studentLocations[indexPath.row]
         let studentLocation = UserManager.sharedInstance.locations[indexPath.row]
         if verifyUrl(urlString: studentLocation.mediaURL!) == true {
             let url = URL(string: studentLocation.mediaURL!)
@@ -86,14 +75,6 @@ class MapTableViewController: UITableViewController {
         } else {
             popAlert()
         }
-        
-//        if verifyUrl(urlString: studentLocation.mediaURL) == true {
-//            let url = URL(string: studentLocation.mediaURL)
-//            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-//        } else {
-//            popAlert()
-//        }
-        
     }
     
     // Function to verify if a url entered can be opened
@@ -108,51 +89,16 @@ class MapTableViewController: UITableViewController {
     func loadCellData(results: [StudentInformation]) {
         UserManager.sharedInstance.locations.removeAll()
         UserManager.sharedInstance.locations = results
-//        StudentLocation.studentLocations.removeAll()
-//        for student in results {
-//            let studentLocation = StudentLocation()
-//
-//            if let firstName = student["firstName"] as? String {
-//                studentLocation.firstName = firstName
-//            }
-//            if let lastName = student["lastName"] as? String {
-//                studentLocation.lastName = lastName
-//            }
-//            if let latitude = student["latitude"] as? Double {
-//                studentLocation.latitude = latitude
-//            }
-//            if let longitude = student["longitude"] as? Double {
-//                studentLocation.longitude = longitude
-//            }
-//            if let mapString = student["mapString"] as? String {
-//                studentLocation.mapString = mapString
-//            }
-//            if let mediaURL = student["mediaURL"] as? String {
-//                studentLocation.mediaURL = mediaURL
-//            }
-//            if let objectId = student["objectId"] as? String {
-//                studentLocation.objectId = objectId
-//            }
-//            if let uniqueKey = student["uniqueKey"] as? String {
-//                studentLocation.uniqueKey = uniqueKey
-//            }
-//            if let createdAt = student["createdAt"] as? String {
-//                studentLocation.createdAt = createdAt
-//            }
-//            if let updatedAt = student["updatedAt"] as? String {
-//                studentLocation.updatedAt = updatedAt
-//            }
-//            StudentLocation.studentLocations.append(studentLocation)
-//        }
     }
     
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
-//        Student.Constant.getStudentLocations(mapView: nil)
         Convenience.sharedInstance.activityIndicator(loading: true)
         
         // MARK: Refresh student locations
         APIClient.sharedInstance.getStudentLocations { (success, results, error)  in
             if error != nil {
+                Convenience.sharedInstance.activityIndicator(loading: false)
+                self.fetchingFailureAlert()
                 return
             }
             guard let results = results else {
@@ -166,11 +112,7 @@ class MapTableViewController: UITableViewController {
     }
     
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
-        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
-            return
-        }
-        self.present(loginViewController, animated: true, completion: nil)
-        APIClient.sharedInstance.deleteSession()
+        logoutAlert()
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {
@@ -193,23 +135,6 @@ class MapTableViewController: UITableViewController {
     
     // MARK: Verify if student has previously posted any location
     func verifyPostedLocation(results: [StudentInformation]) {
-//        for student in results {
-//            if student["uniqueKey"] as? String == Student.uniqueKey {
-//                Student.exist = true
-//                guard let studentFirstName = student["firstName"] as? String else {
-//                    return
-//                }
-//                guard let studentLastName = student["lastName"] as? String else {
-//                    return
-//                }
-//                guard let objectId = student["objectId"] as? String else {
-//                    return
-//                }
-//                Student.firstName = studentFirstName
-//                Student.lastName = studentLastName
-//                Student.objectId = objectId
-//            }
-//        }
         for student in results {
             guard let uniqueKey = student.uniqueKey else {
                 return
@@ -230,6 +155,30 @@ class MapTableViewController: UITableViewController {
                 Student.objectId = objectId
             }
         }
+    }
+    
+    // MARK: Fetching data failure alert
+    func fetchingFailureAlert() {
+        let alert = UIAlertController(title: "Connection Failed", message: "Please Try Again", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: Logout confirmation alert
+    func logoutAlert() {
+        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
+            return
+        }
+        let alert = UIAlertController(title: nil, message: "Do you want to exit?", preferredStyle: .alert)
+        let overwriteAlertAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
+            self.present(loginViewController, animated: true, completion: nil)
+            APIClient.sharedInstance.deleteSession()
+        })
+        let cancelAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(overwriteAlertAction)
+        alert.addAction(cancelAlertAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: Alert when student has previously posted a location, option to overwrite to prompt segue

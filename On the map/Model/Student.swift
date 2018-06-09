@@ -19,12 +19,4 @@ class Student: NSObject {
     static var studentCity = ""
     static var studentState = ""
     static var objectId = ""
-
-//    // MARK: Shared Instance
-//    class func sharedInstance() -> Student {
-//        struct Singleton {
-//            static var sharedInstance = Student()
-//        }
-//        return Singleton.sharedInstance
-//    }
 }
