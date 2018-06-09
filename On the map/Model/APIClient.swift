@@ -44,7 +44,7 @@ class APIClient: NSObject{
     }
     
     // MARK: Get Student Location
-    func getStudentLocations(completion: @escaping (_ success: Bool, _ results: [[String:AnyObject]]?, _ error: Error?) -> Void) {
+    func getStudentLocations(completion: @escaping (_ success: Bool, _ results: [StudentInformation]?, _ error: Error?) -> Void) {
         var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -56,18 +56,28 @@ class APIClient: NSObject{
                 return
             }
             DispatchQueue.main.async {
-                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
-                    return
-                }
-                completion(true, result, nil)
-            }
+                guard let data = data else {return}
+                guard let jsonResults = try? JSONDecoder().decode(Results.self, from: data) else {return}
+                let studentResults = jsonResults.results
+//                guard let infoResults = jsonResults  else {return}
+//                let studentResults = infoResults.results
+                //            DispatchQueue.main.async {
+                //                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+                //                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
+                //                    return
+                //                }
+                //                completion(true, result, nil)
+                completion(true, studentResults, nil)
+                            }
+//
+            
+            
         }
         task.resume()
     }
     
     // MARK: Verify if student has previously posted location
-    func verifyUserLocationAlreadyExist(completion: @escaping (_ results: [[String:AnyObject]]?, _ error: Error?) -> Void) {
+    func verifyUserLocationAlreadyExist(completion: @escaping (_ results: [StudentInformation]?, _ error: Error?) -> Void) {
         var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=500&&order=-updatedAt")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -80,12 +90,26 @@ class APIClient: NSObject{
             }
             
             DispatchQueue.main.async {
-                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
-                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
-                    return
-                }
-                completion(result, nil)
+                guard let data = data else {return}
+                guard let jsonResults = try? JSONDecoder().decode(Results.self, from: data) else {return}
+                let studentResults = jsonResults.results
+                //                guard let infoResults = jsonResults  else {return}
+                //                let studentResults = infoResults.results
+                //            DispatchQueue.main.async {
+                //                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+                //                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
+                //                    return
+                //                }
+                //                completion(true, result, nil)
+                completion(studentResults, nil)
             }
+//            DispatchQueue.main.async {
+//                let parseResult = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as AnyObject
+//                guard let result = parseResult!["results"] as? [[String:AnyObject]] else {
+//                    return
+//                }
+//                completion(result, nil)
+//            }
         }
         task.resume()
     }

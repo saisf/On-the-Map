@@ -27,6 +27,8 @@ class MapTableViewController: UITableViewController {
                 return
             }
             if success {
+//                UserManager.sharedInstance.locations.removeAll()
+//                UserManager.sharedInstance.locations = results
                 self.loadCellData(results: results)
                 Convenience.sharedInstance.activityIndicator(loading: false)
             }
@@ -41,7 +43,8 @@ class MapTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return StudentLocation.studentLocations.count
+//        return StudentLocation.studentLocations.count
+        return UserManager.sharedInstance.locations.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,7 +53,8 @@ class MapTableViewController: UITableViewController {
         var media = "[No Media URL]"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let studentLocation = StudentLocation.studentLocations[indexPath.row]
+//        let studentLocation = StudentLocation.studentLocations[indexPath.row]
+        let studentLocation = UserManager.sharedInstance.locations[indexPath.row]
         if let firstName = studentLocation.firstName {
             first = firstName
         }
@@ -62,18 +66,33 @@ class MapTableViewController: UITableViewController {
         }
         cell.textLabel?.text = "\(first) \(last)"
         cell.detailTextLabel?.text = media
+        
+//        first = studentLocation.firstName
+//        last = studentLocation.lastName
+//
+//        media = studentLocation.mediaURL
+//        cell.textLabel?.text = "\(first) \(last)"
+//        cell.detailTextLabel?.text = media
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let studentLocation = StudentLocation.studentLocations[indexPath.row]
+//        let studentLocation = StudentLocation.studentLocations[indexPath.row]
+        let studentLocation = UserManager.sharedInstance.locations[indexPath.row]
         if verifyUrl(urlString: studentLocation.mediaURL!) == true {
             let url = URL(string: studentLocation.mediaURL!)
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         } else {
             popAlert()
         }
+        
+//        if verifyUrl(urlString: studentLocation.mediaURL) == true {
+//            let url = URL(string: studentLocation.mediaURL)
+//            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+//        } else {
+//            popAlert()
+//        }
         
     }
     
@@ -86,43 +105,45 @@ class MapTableViewController: UITableViewController {
     }
     
     // MARK: Add annotations to map
-    func loadCellData(results: [[String:AnyObject]]) {
-        StudentLocation.studentLocations.removeAll()
-        for student in results {
-            let studentLocation = StudentLocation()
-            
-            if let firstName = student["firstName"] as? String {
-                studentLocation.firstName = firstName
-            }
-            if let lastName = student["lastName"] as? String {
-                studentLocation.lastName = lastName
-            }
-            if let latitude = student["latitude"] as? Double {
-                studentLocation.latitude = latitude
-            }
-            if let longitude = student["longitude"] as? Double {
-                studentLocation.longitude = longitude
-            }
-            if let mapString = student["mapString"] as? String {
-                studentLocation.mapString = mapString
-            }
-            if let mediaURL = student["mediaURL"] as? String {
-                studentLocation.mediaURL = mediaURL
-            }
-            if let objectId = student["objectId"] as? String {
-                studentLocation.objectId = objectId
-            }
-            if let uniqueKey = student["uniqueKey"] as? String {
-                studentLocation.uniqueKey = uniqueKey
-            }
-            if let createdAt = student["createdAt"] as? String {
-                studentLocation.createdAt = createdAt
-            }
-            if let updatedAt = student["updatedAt"] as? String {
-                studentLocation.updatedAt = updatedAt
-            }
-            StudentLocation.studentLocations.append(studentLocation)
-        }
+    func loadCellData(results: [StudentInformation]) {
+        UserManager.sharedInstance.locations.removeAll()
+        UserManager.sharedInstance.locations = results
+//        StudentLocation.studentLocations.removeAll()
+//        for student in results {
+//            let studentLocation = StudentLocation()
+//
+//            if let firstName = student["firstName"] as? String {
+//                studentLocation.firstName = firstName
+//            }
+//            if let lastName = student["lastName"] as? String {
+//                studentLocation.lastName = lastName
+//            }
+//            if let latitude = student["latitude"] as? Double {
+//                studentLocation.latitude = latitude
+//            }
+//            if let longitude = student["longitude"] as? Double {
+//                studentLocation.longitude = longitude
+//            }
+//            if let mapString = student["mapString"] as? String {
+//                studentLocation.mapString = mapString
+//            }
+//            if let mediaURL = student["mediaURL"] as? String {
+//                studentLocation.mediaURL = mediaURL
+//            }
+//            if let objectId = student["objectId"] as? String {
+//                studentLocation.objectId = objectId
+//            }
+//            if let uniqueKey = student["uniqueKey"] as? String {
+//                studentLocation.uniqueKey = uniqueKey
+//            }
+//            if let createdAt = student["createdAt"] as? String {
+//                studentLocation.createdAt = createdAt
+//            }
+//            if let updatedAt = student["updatedAt"] as? String {
+//                studentLocation.updatedAt = updatedAt
+//            }
+//            StudentLocation.studentLocations.append(studentLocation)
+//        }
     }
     
     @IBAction func refreshButton(_ sender: UIBarButtonItem) {
@@ -171,19 +192,39 @@ class MapTableViewController: UITableViewController {
     }
     
     // MARK: Verify if student has previously posted any location
-    func verifyPostedLocation(results: [[String:AnyObject]]) {
+    func verifyPostedLocation(results: [StudentInformation]) {
+//        for student in results {
+//            if student["uniqueKey"] as? String == Student.uniqueKey {
+//                Student.exist = true
+//                guard let studentFirstName = student["firstName"] as? String else {
+//                    return
+//                }
+//                guard let studentLastName = student["lastName"] as? String else {
+//                    return
+//                }
+//                guard let objectId = student["objectId"] as? String else {
+//                    return
+//                }
+//                Student.firstName = studentFirstName
+//                Student.lastName = studentLastName
+//                Student.objectId = objectId
+//            }
+//        }
         for student in results {
-            if student["uniqueKey"] as? String == Student.uniqueKey {
+            guard let uniqueKey = student.uniqueKey else {
+                return
+            }
+            guard let studentFirstName = student.firstName else {
+                return
+            }
+            guard let studentLastName = student.lastName else {
+                return
+            }
+            guard let objectId = student.objectId else {
+                return
+            }
+            if uniqueKey == Student.uniqueKey {
                 Student.exist = true
-                guard let studentFirstName = student["firstName"] as? String else {
-                    return
-                }
-                guard let studentLastName = student["lastName"] as? String else {
-                    return
-                }
-                guard let objectId = student["objectId"] as? String else {
-                    return
-                }
                 Student.firstName = studentFirstName
                 Student.lastName = studentLastName
                 Student.objectId = objectId

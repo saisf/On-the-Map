@@ -107,19 +107,22 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     // MARK: Verify if student has previously posted any location
-    func verifyPostedLocation(results: [[String:AnyObject]]) {
+    func verifyPostedLocation(results: [StudentInformation]) {
         for student in results {
-            if student["uniqueKey"] as? String == Student.uniqueKey {
+            guard let uniqueKey = student.uniqueKey else {
+                return
+            }
+            guard let studentFirstName = student.firstName else {
+                return
+            }
+            guard let studentLastName = student.lastName else {
+                return
+            }
+            guard let objectId = student.objectId else {
+                return
+            }
+            if uniqueKey == Student.uniqueKey {
                 Student.exist = true
-                guard let studentFirstName = student["firstName"] as? String else {
-                    return
-                }
-                guard let studentLastName = student["lastName"] as? String else {
-                    return
-                }
-                guard let objectId = student["objectId"] as? String else {
-                    return
-                }
                 Student.firstName = studentFirstName
                 Student.lastName = studentLastName
                 Student.objectId = objectId
@@ -128,55 +131,54 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     // MARK: Add annotations to map
-    func addAnnotation(results: [[String:AnyObject]]) {
-        StudentLocation.studentLocations.removeAll()
-        for student in results {
-            let studentLocation = StudentLocation()
+    
+    func addAnnotation(results: [StudentInformation]) {
+        UserManager.sharedInstance.locations.removeAll()
+        for result in results {
             var first = ""
             var last = ""
             var lat = 0.0
             var long = 0.0
             var medURL = ""
-            
-            if let firstName = student["firstName"] as? String {
-                studentLocation.firstName = firstName
+            var create = ""
+            var mapstr = ""
+            var objId = ""
+            var key = ""
+            var update = ""
+            if let firstName = result.firstName {
                 first = firstName
             }
-            if let lastName = student["lastName"] as? String {
-                studentLocation.lastName = lastName
+            if let lastName = result.lastName {
                 last = lastName
             }
-            if let latitude = student["latitude"] as? Double {
-                studentLocation.latitude = latitude
-                lat = latitude
-            }
-            if let longitude = student["longitude"] as? Double {
-                studentLocation.longitude = longitude
-                long = longitude
-            }
-            if let mapString = student["mapString"] as? String {
-                studentLocation.mapString = mapString
-            }
-            if let mediaURL = student["mediaURL"] as? String {
-                studentLocation.mediaURL = mediaURL
+            if let mediaURL = result.mediaURL {
                 medURL = mediaURL
             }
-            if let objectId = student["objectId"] as? String {
-                studentLocation.objectId = objectId
+            if let latitude = result.latitude {
+                lat = latitude
             }
-            if let uniqueKey = student["uniqueKey"] as? String {
-                studentLocation.uniqueKey = uniqueKey
+            if let longitude = result.longitude {
+                long = longitude
             }
-            if let createdAt = student["createdAt"] as? String {
-                studentLocation.createdAt = createdAt
+            if let createdAt = result.createdAt {
+                create = createdAt
             }
-            if let updatedAt = student["updatedAt"] as? String {
-                studentLocation.updatedAt = updatedAt
+            if let mapString = result.mapString {
+                mapstr = mapString
             }
-            StudentLocation.studentLocations.append(studentLocation)
-            let latt = CLLocationDegrees(lat)
-            let longg = CLLocationDegrees(long)
-            let coordinate = CLLocationCoordinate2D(latitude: latt, longitude: longg)
+            if let objectId = result.objectId {
+                objId = objectId
+            }
+            if let uniqueKey = result.uniqueKey {
+                key = uniqueKey
+            }
+            if let updatedAt = result.updatedAt {
+                update = updatedAt
+            }
+            let studentInformation = StudentInformation(createdAt: create, firstName: first, lastName: last, latitude: lat, longitude: long, mapString: mapstr, mediaURL: medURL, objectId: objId, uniqueKey: key, updatedAt: update)
+            UserManager.sharedInstance.locations.append(studentInformation)
+            
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             annotation.title = "\(first) \(last)"
@@ -184,6 +186,62 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             self.mapView?.addAnnotation(annotation)
         }
     }
+//    func addAnnotation(results: [[String:AnyObject]]) {
+//        StudentLocation.studentLocations.removeAll()
+//        for student in results {
+//            let studentLocation = StudentLocation()
+//            var first = ""
+//            var last = ""
+//            var lat = 0.0
+//            var long = 0.0
+//            var medURL = ""
+//
+//            if let firstName = student["firstName"] as? String {
+//                studentLocation.firstName = firstName
+//                first = firstName
+//            }
+//            if let lastName = student["lastName"] as? String {
+//                studentLocation.lastName = lastName
+//                last = lastName
+//            }
+//            if let latitude = student["latitude"] as? Double {
+//                studentLocation.latitude = latitude
+//                lat = latitude
+//            }
+//            if let longitude = student["longitude"] as? Double {
+//                studentLocation.longitude = longitude
+//                long = longitude
+//            }
+//            if let mapString = student["mapString"] as? String {
+//                studentLocation.mapString = mapString
+//            }
+//            if let mediaURL = student["mediaURL"] as? String {
+//                studentLocation.mediaURL = mediaURL
+//                medURL = mediaURL
+//            }
+//            if let objectId = student["objectId"] as? String {
+//                studentLocation.objectId = objectId
+//            }
+//            if let uniqueKey = student["uniqueKey"] as? String {
+//                studentLocation.uniqueKey = uniqueKey
+//            }
+//            if let createdAt = student["createdAt"] as? String {
+//                studentLocation.createdAt = createdAt
+//            }
+//            if let updatedAt = student["updatedAt"] as? String {
+//                studentLocation.updatedAt = updatedAt
+//            }
+//            StudentLocation.studentLocations.append(studentLocation)
+//            let latt = CLLocationDegrees(lat)
+//            let longg = CLLocationDegrees(long)
+//            let coordinate = CLLocationCoordinate2D(latitude: latt, longitude: longg)
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = coordinate
+//            annotation.title = "\(first) \(last)"
+//            annotation.subtitle = medURL
+//            self.mapView?.addAnnotation(annotation)
+//        }
+//    }
     
     // MARK: Alert when mediaURL cannot be opened
     fileprivate func popAlert() {
