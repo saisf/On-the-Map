@@ -85,12 +85,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     @IBAction func logoutButton(_ sender: UIBarButtonItem) {
-//        guard let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") else {
-//            return
-//        }
-//        self.present(loginViewController, animated: true, completion: nil)
         logoutAlert()
-        
     }
     
     @IBAction func addLocationButton(_ sender: UIBarButtonItem) {

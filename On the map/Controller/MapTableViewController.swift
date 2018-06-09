@@ -129,6 +129,8 @@ class MapTableViewController: UITableViewController {
             Convenience.sharedInstance.activityIndicator(loading: false)
             if Student.exist {
                 self.studentAlreadyExistAlert()
+            } else {
+                self.performSegue(withIdentifier: "ToAddLocationFromTable", sender: nil)
             }
         }
     }
