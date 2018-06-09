@@ -107,6 +107,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             Convenience.sharedInstance.activityIndicator(loading: false)
             if Student.exist {
                 self.studentAlreadyExistAlert()
+            } else {
+                self.performSegue(withIdentifier: "addLocation", sender: nil)
             }
         }
     }

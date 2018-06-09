@@ -107,7 +107,7 @@ class MapTableViewController: UITableViewController {
             if success {
                 self.loadCellData(results: results)
                 Convenience.sharedInstance.activityIndicator(loading: false)
-            }
+            } 
         }
     }
     
